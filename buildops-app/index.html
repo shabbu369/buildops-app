@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>BUILDOPS — Saudi Arabia Management Platform</title>
+<link rel="stylesheet" href="css/style.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<!-- ═══ LOGIN ════════════════════════════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-left">
+    <div class="login-brand"><span class="brand-b">B</span>UILDOPS</div>
+    <h1 class="login-headline">One platform.<br><span class="text-amber">Three businesses.</span></h1>
+    <p class="login-sub">Manpower rental, heavy equipment supply and construction project execution — managed from a single workspace, built for Saudi Arabia.</p>
+    <div class="login-pills">
+      <div class="pill"><span>👷</span><div><b>Manpower Rental</b><small>Source · Deploy · Invoice</small></div></div>
+      <div class="pill"><span>🏗️</span><div><b>Equipment Rental</b><small>Fleet · Scheduling · Billing</small></div></div>
+      <div class="pill"><span>📋</span><div><b>Construction Projects</b><small>RFQ · Planning · Closeout</small></div></div>
+    </div>
+  </div>
+  <div class="login-right">
+    <h2>Welcome back</h2>
+    <p class="login-sub-small">Sign in to your BUILDOPS workspace</p>
+    <div class="form-group"><label>Email</label><input id="login-email" type="email" placeholder="admin@buildops.sa"/></div>
+    <div class="form-group"><label>Password</label>
+      <div class="pass-wrap"><input id="login-pass" type="password" placeholder="••••••••"/>
+        <button type="button" onclick="togglePass()" id="pass-eye">👁️</button></div></div>
+    <div id="login-err" class="alert alert-danger" style="display:none"></div>
+    <button class="btn btn-amber btn-full" id="login-btn" onclick="Auth.login()">Sign In</button>
+    <div class="demo-hint">Demo: <b>admin@buildops.sa</b> / <b>admin123</b></div>
+  </div>
+</div>
+
+<!-- ═══ APP SHELL ══════════════════════════════════════════════════════════ -->
+<div id="app-screen" style="display:none">
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sb-header">
+      <div class="sb-logo"><span class="brand-b sm">B</span><span class="sb-title" id="sb-title-text">BUILDOPS</span></div>
+      <button class="sb-toggle" onclick="toggleSidebar()" id="sb-toggle-btn">☰</button>
+    </div>
+    <nav class="sb-nav" id="sb-nav">
+      <a class="nav-item active" data-page="dashboard"   onclick="Nav.go('dashboard')">   <span>⊞</span><span class="nav-label">Dashboard</span></a>
+      <div class="nav-section"><span class="nav-label">OPERATIONS</span></div>
+      <a class="nav-item" data-page="manpower"   onclick="Nav.go('manpower')">   <span>👷</span><span class="nav-label">Manpower Rental</span></a>
+      <a class="nav-item" data-page="equipment"  onclick="Nav.go('equipment')">  <span>🏗️</span><span class="nav-label">Equipment Rental</span></a>
+      <a class="nav-item" data-page="projects"   onclick="Nav.go('projects')">   <span>📋</span><span class="nav-label">Construction Projects</span></a>
+      <div class="nav-section"><span class="nav-label">MANAGEMENT</span></div>
+      <a class="nav-item" data-page="finance"    onclick="Nav.go('finance')">    <span>💰</span><span class="nav-label">Finance & Reports</span></a>
+      <a class="nav-item" data-page="hr"         onclick="Nav.go('hr')">         <span>📁</span><span class="nav-label">HR & Compliance</span></a>
+      <a class="nav-item" data-page="settings"   onclick="Nav.go('settings')">   <span>⚙️</span><span class="nav-label">Settings</span></a>
+    </nav>
+    <div class="sb-user" id="sb-user">
+      <div class="user-avatar" id="sb-avatar">MA</div>
+      <div class="user-info sb-title" id="sb-user-info">
+        <div class="user-name" id="sb-user-name">Mohammed Al-Rashid</div>
+        <div class="user-role" id="sb-user-role">Partner</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div id="main-wrap">
+    <header id="topbar">
+      <button class="mob-menu-btn" onclick="toggleMobSidebar()">☰</button>
+      <div class="topbar-breadcrumb" id="topbar-breadcrumb">Dashboard</div>
+      <div class="topbar-right">
+        <span class="topbar-badge">🇸🇦 KSA · SAR · ZATCA</span>
+        <span class="topbar-date" id="topbar-date"></span>
+        <button class="btn btn-sm btn-ghost" onclick="Auth.logout()">Sign Out</button>
+      </div>
+    </header>
+    <div id="content"><!-- Dynamic content rendered here --></div>
+  </div>
+
+</div><!-- /app-screen -->
+
+<!-- Mobile sidebar overlay -->
+<div id="mob-overlay" onclick="toggleMobSidebar()"></div>
+
+<!-- ═══ MODAL ═══════════════════════════════════════════════════════════════ -->
+<div id="modal" style="display:none">
+  <div class="modal-backdrop" onclick="Modal.close()"></div>
+  <div class="modal-box" id="modal-box">
+    <div class="modal-header">
+      <h3 id="modal-title">Modal Title</h3>
+      <button class="modal-close" onclick="Modal.close()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer" id="modal-footer"></div>
+  </div>
+</div>
+
+<!-- ═══ TOAST ════════════════════════════════════════════════════════════════ -->
+<div id="toast-container"></div>
+
+<script src="js/app.js"></script>
+<script src="js/workforce.js"></script>
+<script src="js/construction.js"></script>
+<script>App.init();</script>
+</body>
+</html>
